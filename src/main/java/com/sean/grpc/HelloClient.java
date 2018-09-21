@@ -5,28 +5,36 @@ import example.Hello;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.StatusRuntimeException;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * A simple client that requests a greeting from the {@link HelloWorldServer}.
+ * Construct client connecting to HelloWorld server at {@code host:port}.
  */
-public class Client {
-    private static final Logger logger = Logger.getLogger(Client.class.getName());
+public class HelloClient {
+    private static final Logger logger = Logger.getLogger(HelloClient.class.getName());
 
     private final ManagedChannel channel;
     private final GrpcActionGrpc.GrpcActionBlockingStub blockingStub;
 
-    public Client(String host, int port) {
-        channel = ManagedChannelBuilder.forAddress(host, port)
+    /**
+     * Construct client connecting to HelloWorld server at {@code host:port}.
+     */
+    public HelloClient(String host, int port) {
+        this(ManagedChannelBuilder.forAddress(host, port)
+                // Channels are secure by default (via SSL/TLS). For the example we disable TLS to avoid
+                // needing certificates.
                 .usePlaintext(true)
-                .build();
+                .build());
+    }
+
+    /**
+     * Construct client for accessing HelloWorld server using the existing channel.
+     */
+    HelloClient(ManagedChannel channel) {
+        this.channel = channel;
         blockingStub = GrpcActionGrpc.newBlockingStub(channel);
     }
 
@@ -38,7 +46,7 @@ public class Client {
      * Say hello to server.
      */
     public void SayHello() throws UnsupportedEncodingException {
-        String str = "你好222se22an你好";
+        String str = "你好222se22an你好22";
         Hello.HelloRequest request = Hello.HelloRequest.newBuilder().setName(str).build();
         Hello.HelloReply response = null;
         response = blockingStub.sayHello(request);
@@ -50,8 +58,8 @@ public class Client {
      * greeting.
      */
     public static void main(String[] args) throws Exception {
-        Client client = new Client("localhost", 8188);
-        client.SayHello();
-        client.shutdown();
+        HelloClient helloClient = new HelloClient("localhost", 8188);
+        helloClient.SayHello();
+        helloClient.shutdown();
     }
 }
