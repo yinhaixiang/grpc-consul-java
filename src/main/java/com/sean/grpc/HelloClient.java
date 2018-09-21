@@ -5,9 +5,11 @@ import example.Hello;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.StatusRuntimeException;
 
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -45,11 +47,15 @@ public class HelloClient {
     /**
      * Say hello to server.
      */
-    public void SayHello() throws UnsupportedEncodingException {
-        String str = "你好222se22an你好22";
+    public void SayHello(String str) {
         Hello.HelloRequest request = Hello.HelloRequest.newBuilder().setName(str).build();
         Hello.HelloReply response = null;
-        response = blockingStub.sayHello(request);
+        try {
+            response = blockingStub.sayHello(request);
+        } catch (StatusRuntimeException e) {
+            logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+            return;
+        }
         logger.info("python处理过后的参数: " + response.getMessage());
     }
 
@@ -59,7 +65,8 @@ public class HelloClient {
      */
     public static void main(String[] args) throws Exception {
         HelloClient helloClient = new HelloClient("localhost", 8188);
-        helloClient.SayHello();
+        String str = "你好222se22an你好22";
+        helloClient.SayHello(str);
         helloClient.shutdown();
     }
 }
