@@ -32,6 +32,18 @@
       <artifactId>fastjson</artifactId>
       <version>1.2.31</version>
     </dependency>
+
+    <dependency>
+      <groupId>com.orbitz.consul</groupId>
+      <artifactId>consul-client</artifactId>
+      <version>1.2.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.squareup.okio</groupId>
+      <artifactId>okio</artifactId>
+      <version>1.13.0</version>
+    </dependency>
   </dependencies>
 
   <build>
