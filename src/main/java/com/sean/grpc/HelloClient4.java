@@ -29,6 +29,7 @@ public class HelloClient4 {
         List<ServiceHealth> nodes = healthClient.getHealthyServiceInstances(serviceName).getResponse();
         System.out.println("健康的服务节点数: " + nodes.size());
 
+        // 用ManagedChannelBuilder 或者 NettyChannelBuilder 都可以
         managedChannel = NettyChannelBuilder.forAddress(grpcHost, grpcPort).usePlaintext(true).build();
         blockingStub = GrpcActionGrpc.newBlockingStub(managedChannel);
 
