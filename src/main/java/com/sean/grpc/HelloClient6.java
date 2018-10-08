@@ -19,9 +19,9 @@ public class HelloClient6 {
 
     public static void main(String[] args) throws InterruptedException {
         // 配置和入参
-        String consulHostAndPort = "10.11.18.18:8500";
+        String consulHostAndPort = "172.16.9.144:8500";
         String serviceName = "promotion-service";
-        String message = "java你好aa22你好";
+        String message = "java你好aa22你好22";
 
 
         // 框架应该做好的, 不需要业务方关心的
