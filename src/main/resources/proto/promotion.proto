@@ -1,0 +1,14 @@
+syntax = "proto3";
+package com.promotion;
+
+message PromotionRequest {
+   string message = 1;
+}
+
+message PromotionResponse {
+   string message = 1;
+}
+
+service Compute {
+  rpc handle (PromotionRequest) returns (PromotionResponse) {}
+}
