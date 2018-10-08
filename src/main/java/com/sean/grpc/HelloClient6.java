@@ -19,12 +19,12 @@ public class HelloClient6 {
 
     public static void main(String[] args) throws InterruptedException {
         // 配置和入参
-        String consulHostAndPort = "127.0.0.1:8500";
+        String consulHostAndPort = "10.11.18.18:8500";
         String serviceName = "promotion-service";
         String message = "java你好aa22你好";
 
 
-        // 框架应该做好的
+        // 框架应该做好的, 不需要业务方关心的
         ManagedChannel managedChannel;
         Consul consul = Consul.builder().withHostAndPort(HostAndPort.fromString(consulHostAndPort)).build();
         HealthClient healthClient = consul.healthClient();
