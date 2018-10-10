@@ -48,6 +48,7 @@ public class HelloClient6 {
 
     public static Service getCurrentServiceByServiceName(String serviceName, HealthClient healthClient) {
         List<ServiceHealth> nodes = healthClient.getHealthyServiceInstances(serviceName).getResponse();
+        System.out.println("health services size: " + nodes.size());
         if (nodes.size() == 0) {
             return null;
         }
